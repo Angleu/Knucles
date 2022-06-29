@@ -1,0 +1,112 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  username String   @id @unique
+  type     String
+  password String
+  Video    Video[]
+  Music    Music[]
+  Critic   Critic[]
+  Group    Group[]
+  create_at DateTime @default(now())
+
+
+  UserGroup UserGroup[]
+  @@map("users")
+}
+
+model UserGroup {
+  id_user  String
+  user     User   @relation(fields: [id_user], references: [username])
+  id_group String
+  group    Group  @relation(fields: [id_group], references: [id_group])
+  create_at DateTime @default(now())
+
+
+
+  @@id([id_user, id_group])
+  @@map("userGroups")
+}
+
+model Group {
+  id_group    String @id @default(uuid())
+  nameGroup   String
+  description String
+  id_user     String
+  admin       User   @relation(fields: [id_user], references: [username])
+  create_at DateTime @default(now())
+
+
+  UserGroup UserGroup[]
+  @@map("groups")
+}
+
+model Music {
+  id_music  String   @id @default(uuid())
+  cover     String
+  title     String
+  actor     String
+  musicPath String
+  create_at DateTime @default(now())
+  id_album  String
+  albums    Album    @relation(fields: [id_album], references: [id_album])
+  id_user   String
+  user      User     @relation(fields: [id_user], references: [username])
+  
+
+
+  @@map("musics")
+}
+
+model Album {
+  id_album    String @id @default(uuid())
+  name        String
+  description String
+
+  Music  Music[]
+  Critic Critic[]
+  create_at DateTime @default(now())
+
+  @@map("albums")
+}
+
+model Video {
+  id_video    String   @id @default(uuid())
+  cover       String
+  title       String
+  actor       String
+  description String
+  videoPath   String
+  id_user     String
+  user        User     @relation(fields: [id_user], references: [username])
+  Critic      Critic[]
+
+  create_at DateTime @default(now())
+
+  @@map("videos")
+}
+
+model Critic {
+  id_critic String  @id @default(uuid())
+  comment   String
+  note      Decimal
+  id_user   String
+  user      User    @relation(fields: [id_user], references: [username])
+  id_video  String
+  video     Video   @relation(fields: [id_video], references: [id_video])
+  id_album  String
+  album     Album   @relation(fields: [id_album], references: [id_album])
+  create_at DateTime @default(now())
+
+  @@map("critics")
+}
