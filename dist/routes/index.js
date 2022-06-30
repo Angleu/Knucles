@@ -31,7 +31,7 @@ routes.post("/api/login/user", new UserServiceControllers_1.default().handleExec
 routes.post("/api/user", new UserServiceControllers_1.default().handleSave);
 routes.delete("/api/user/:username", new UserServiceControllers_1.default().handleDelete);
 // group
-routes.get("/api/user/group/:id_group", new GroupServiceControllers_1.default().handleExecuteGroupUser);
+routes.get("/api/group/user/:id_group", new GroupServiceControllers_1.default().handleExecuteGroupUser);
 routes.get("/api/user/group/:username", new GroupServiceControllers_1.default().handleExecuteUserGroup);
 routes.delete("/api/user/group/:id_group", new GroupServiceControllers_1.default().handleDeleteUserMember);
 routes.post("/api/group/user/:id_group", new GroupServiceControllers_1.default().handleSaveUserMember);
