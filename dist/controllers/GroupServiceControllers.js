@@ -38,8 +38,7 @@ class GroupServiceControllers {
     }
     handleSaveAdmin(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { nameGroup, description } = request.body;
-            const { username } = request.params;
+            const { nameGroup, description, username } = request.body;
             const service = new GroupServices_1.default();
             const result = yield service.saveAdmin(username, nameGroup, description);
             if (result instanceof Error)
