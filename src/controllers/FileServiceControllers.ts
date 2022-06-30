@@ -10,17 +10,22 @@ export default class FileServiceControllers {
 
 
         try {
-            const result = await service.saveOne(typeFile, file?.originalname.split('.')[0] as string, `.${file?.originalname.split('.')[1]}`);
+            const result = await service.saveOne(typeFile, file?.filename as string, `.${file?.originalname.split('.')[1]}`);
             if (result instanceof Object) {
                 return response.status(200).json(result);
             }
 
-            return response.status(302).json({ messenge: "Error upload File" });
+            return response.status(302).json(result);
 
         } catch {
             return response.status(500).send("Error in server");
         }
 
+
+
+    }
+
+    async download(request: Request, response: Response){
 
 
     }

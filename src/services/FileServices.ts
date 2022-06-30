@@ -1,8 +1,8 @@
 export default class FileServices {
-    async saveOne(typeFile: string, name: string, extention: string): Promise<Object> {
+    async saveOne(typeFile: string, name: string, extention: string) {
+
         return {
-            typeFile,
-            name,
+            file: (name + extention).toString(),
             extention
         }
     }

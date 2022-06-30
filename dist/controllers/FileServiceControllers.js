@@ -20,15 +20,19 @@ class FileServiceControllers {
             const { typeFile } = request.body;
             const service = new FileServices_1.default();
             try {
-                const result = yield service.saveOne(typeFile, file === null || file === void 0 ? void 0 : file.originalname.split('.')[0], `.${file === null || file === void 0 ? void 0 : file.originalname.split('.')[1]}`);
+                const result = yield service.saveOne(typeFile, file === null || file === void 0 ? void 0 : file.filename, `.${file === null || file === void 0 ? void 0 : file.originalname.split('.')[1]}`);
                 if (result instanceof Object) {
                     return response.status(200).json(result);
                 }
-                return response.status(302).json({ messenge: "Error upload File" });
+                return response.status(302).json(result);
             }
             catch (_a) {
                 return response.status(500).send("Error in server");
             }
+        });
+    }
+    download(request, response) {
+        return __awaiter(this, void 0, void 0, function* () {
         });
     }
 }

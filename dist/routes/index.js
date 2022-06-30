@@ -25,7 +25,7 @@ const upload = (0, multer_1.default)({
     storage: storage,
 });
 const routes = (0, express_1.Router)();
-routes.get("/api/stream/video", new StreamControllers_1.default().indexVideo);
+routes.get("/api/user", new UserServiceControllers_1.default().handleExecuteOneAll);
 routes.post("/api/files", upload.single('file'), new FileServiceControllers_1.default().handleSaveOne);
 routes.post("/api/login/user", new UserServiceControllers_1.default().handleExecuteOne);
 routes.post("/api/user", new UserServiceControllers_1.default().handleSave);
@@ -50,4 +50,6 @@ routes.delete("/api/video/:id_video", new VideoServicesControllers_1.default().h
 routes.post("/api/video/:id_user", new VideoServicesControllers_1.default().handleSave);
 routes.put("/api/video/:id_video", new VideoServicesControllers_1.default().handleEdit);
 routes.get("/api/video/:id_group", new VideoServicesControllers_1.default().handleExecuteVideoGroup);
+// Stream
+routes.get("/api/stream", new StreamControllers_1.default().indexVideo);
 exports.default = routes;

@@ -29,7 +29,7 @@ const upload = multer({
 
 const routes = Router();
 
-routes.get("/api/stream/video", new StreamControllers().indexVideo);
+routes.get("/api/user", new UserServiceControllers().handleExecuteOneAll);
 routes.post("/api/files", upload.single('file'), new FileServiceControllers().handleSaveOne);
 routes.post("/api/login/user", new UserServiceControllers().handleExecuteOne);
 routes.post("/api/user", new UserServiceControllers().handleSave);
@@ -58,6 +58,11 @@ routes.delete("/api/video/:id_video", new VideoServicesControllers().handleDelet
 routes.post("/api/video/:id_user", new VideoServicesControllers().handleSave);
 routes.put("/api/video/:id_video", new VideoServicesControllers().handleEdit);
 routes.get("/api/video/:id_group", new VideoServicesControllers().handleExecuteVideoGroup);
+
+// Stream
+routes.get("/api/stream", new StreamControllers().indexVideo);
+
+
 
 
 export default routes;

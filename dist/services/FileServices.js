@@ -13,8 +13,7 @@ class FileServices {
     saveOne(typeFile, name, extention) {
         return __awaiter(this, void 0, void 0, function* () {
             return {
-                typeFile,
-                name,
+                file: (name + extention).toString(),
                 extention
             };
         });

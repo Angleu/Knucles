@@ -9,10 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const fs_1 = require("fs");
 class StreamControllers {
     indexVideo(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const { fileName } = request.params;
+            (0, fs_1.createReadStream)('archives/Version 1-1656512342851.mov')
+                .pipe(response)
+                .on("finish", () => {
+                (0, fs_1.createWriteStream)("output.MOV");
+            });
         });
     }
 }
