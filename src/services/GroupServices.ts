@@ -2,6 +2,62 @@ import { PrismaClient } from "@prisma/client"
 
 export default class GroupServices {
 
+    async executeUserGroup(id_user: string) {
+
+        try {
+            const prisma = new PrismaClient();
+            const users = prisma.user.findMany({
+                where: {
+                    username: id_user
+                },
+                include: {
+                    UserGroup: {
+                        select: {
+                            group: true
+                        }
+                    }
+                }
+            })
+            if (users instanceof Object)
+                return users
+
+            return new Error('users não foi criado')
+        } catch {
+            return new Error("Error in server")
+
+        }
+
+
+    }
+
+    async executeGroupUser(id_group: string) {
+
+        try {
+            const prisma = new PrismaClient();
+            const group = prisma.group.findMany({
+                where: {
+                    id_group
+                },
+                include: {
+                    UserGroup: {
+                        include: {
+                            user: true
+                        }
+                    }
+                }
+            })
+            if (group instanceof Object)
+                return group
+
+            return new Error('group não foi criado')
+        } catch {
+            return new Error("Error in server")
+
+        }
+
+
+    }
+
     async saveMusicGroup(id_music: string, id_group: string) {
         const prisma = new PrismaClient();
 
@@ -82,6 +138,9 @@ export default class GroupServices {
                             }
                         }
                     }
+                },
+                include: {
+                    UserGroup: true
                 }
             })
             if (group instanceof Object)

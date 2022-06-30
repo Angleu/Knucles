@@ -11,6 +11,56 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
 class GroupServices {
+    executeUserGroup(id_user) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const prisma = new client_1.PrismaClient();
+                const users = prisma.user.findMany({
+                    where: {
+                        username: id_user
+                    },
+                    include: {
+                        UserGroup: {
+                            select: {
+                                group: true
+                            }
+                        }
+                    }
+                });
+                if (users instanceof Object)
+                    return users;
+                return new Error('users não foi criado');
+            }
+            catch (_a) {
+                return new Error("Error in server");
+            }
+        });
+    }
+    executeGroupUser(id_group) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const prisma = new client_1.PrismaClient();
+                const group = prisma.group.findMany({
+                    where: {
+                        id_group
+                    },
+                    include: {
+                        UserGroup: {
+                            include: {
+                                user: true
+                            }
+                        }
+                    }
+                });
+                if (group instanceof Object)
+                    return group;
+                return new Error('group não foi criado');
+            }
+            catch (_a) {
+                return new Error("Error in server");
+            }
+        });
+    }
     saveMusicGroup(id_music, id_group) {
         return __awaiter(this, void 0, void 0, function* () {
             const prisma = new client_1.PrismaClient();
@@ -85,6 +135,9 @@ class GroupServices {
                                 }
                             }
                         }
+                    },
+                    include: {
+                        UserGroup: true
                     }
                 });
                 if (group instanceof Object)
