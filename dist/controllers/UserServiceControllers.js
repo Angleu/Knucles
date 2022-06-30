@@ -16,7 +16,7 @@ const UserServices_1 = __importDefault(require("../services/UserServices"));
 class UserServiceControllers {
     handleExecuteOneAll(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { username, password } = request.body;
+            const { username } = request.params;
             const service = new UserServices_1.default();
             const result = yield service.executeOneAll(username);
             if (result instanceof Error)

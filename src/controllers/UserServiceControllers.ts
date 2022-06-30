@@ -3,7 +3,7 @@ import UserServices from "../services/UserServices";
 
 export default class UserServiceControllers {
     async handleExecuteOneAll(request: Request, response: Response) {
-        const { username, password } = request.body
+        const { username } = request.params
         const service = new UserServices();
 
         const result = await service.executeOneAll(username);
