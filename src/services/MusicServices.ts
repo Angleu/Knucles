@@ -1,6 +1,39 @@
 import { PrismaClient } from "@prisma/client"
 export default class MusicServices {
 
+    async executeByUser(id_user: string) {
+        const prisma = new PrismaClient();
+
+        try {
+            const music = await prisma.music.findMany({
+                where: {
+                    id_user
+                }
+            });
+
+            if (music instanceof Object)
+                return music
+
+            return new Error('music não existe')
+        } catch {
+            return new Error("Error in server")
+        }
+    }
+
+    async executeAll() {
+        const prisma = new PrismaClient();
+
+        try {
+            const music = await prisma.music.findMany();
+
+            if (music instanceof Object)
+                return music
+
+            return new Error('music não existe')
+        } catch {
+            return new Error("Error in server")
+        }
+    }
     async executeMusicGroup(id_group: string) {
         const prisma = new PrismaClient();
 

@@ -11,6 +11,38 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
 class MusicServices {
+    executeByUser(id_user) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const prisma = new client_1.PrismaClient();
+            try {
+                const music = yield prisma.music.findMany({
+                    where: {
+                        id_user
+                    }
+                });
+                if (music instanceof Object)
+                    return music;
+                return new Error('music não existe');
+            }
+            catch (_a) {
+                return new Error("Error in server");
+            }
+        });
+    }
+    executeAll() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const prisma = new client_1.PrismaClient();
+            try {
+                const music = yield prisma.music.findMany();
+                if (music instanceof Object)
+                    return music;
+                return new Error('music não existe');
+            }
+            catch (_a) {
+                return new Error("Error in server");
+            }
+        });
+    }
     executeMusicGroup(id_group) {
         return __awaiter(this, void 0, void 0, function* () {
             const prisma = new client_1.PrismaClient();

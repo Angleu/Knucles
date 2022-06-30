@@ -14,6 +14,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const VideoServices_1 = __importDefault(require("../services/VideoServices"));
 class VideoServicesControllers {
+    handleExecuteByUser(request, response) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id_user } = request.params;
+            const service = new VideoServices_1.default();
+            const result = yield service.executeByUser(id_user);
+            if (result instanceof Error)
+                return response.status(302).json(result.message);
+            return response.json(result);
+        });
+    }
+    handleExecuteAll(request, response) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const service = new VideoServices_1.default();
+            const result = yield service.executeAll();
+            if (result instanceof Error)
+                return response.status(302).json(result.message);
+            return response.json(result);
+        });
+    }
     handleExecuteVideoGroup(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id_group } = request.params;

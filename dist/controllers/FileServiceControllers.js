@@ -31,9 +31,5 @@ class FileServiceControllers {
             }
         });
     }
-    download(request, response) {
-        return __awaiter(this, void 0, void 0, function* () {
-        });
-    }
 }
 exports.default = FileServiceControllers;

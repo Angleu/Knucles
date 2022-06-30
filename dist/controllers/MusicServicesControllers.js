@@ -14,6 +14,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const MusicServices_1 = __importDefault(require("../services/MusicServices"));
 class MusicServicesControllers {
+    handleExecuteAll(request, response) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id_user } = request.params;
+            const service = new MusicServices_1.default();
+            const result = yield service.executeAll();
+            if (result instanceof Error)
+                return response.status(302).json(result.message);
+            return response.json(result);
+        });
+    }
+    handleExecuteByUser(request, response) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id_user } = request.params;
+            const service = new MusicServices_1.default();
+            const result = yield service.executeByUser(id_user);
+            if (result instanceof Error)
+                return response.status(302).json(result.message);
+            return response.json(result);
+        });
+    }
     handleExecuteMusicGroup(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id_group } = request.params;

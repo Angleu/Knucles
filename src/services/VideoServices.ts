@@ -1,6 +1,40 @@
 import { PrismaClient } from "@prisma/client"
 export default class VideoServices {
 
+    async executeByUser(id_user: string) {
+        const prisma = new PrismaClient();
+
+        try {
+            const video = await prisma.video.findMany({
+                where: {
+                    id_user
+                }
+            })
+
+            if (video instanceof Object)
+                return video
+
+            return new Error('video não existe')
+        } catch {
+            return new Error("Error in server")
+        }
+    }
+
+    async executeAll() {
+        const prisma = new PrismaClient();
+
+        try {
+            const video = await prisma.video.findMany()
+
+            if (video instanceof Object)
+                return video
+
+            return new Error('video não existe')
+        } catch {
+            return new Error("Error in server")
+        }
+    }
+
     async executeVideoGroup(id_group: string) {
         const prisma = new PrismaClient();
 

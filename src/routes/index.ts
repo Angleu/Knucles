@@ -52,12 +52,16 @@ routes.get("/api/album", new AlbumServicesControllers().handleExecute);
 routes.delete("/api/music/:id_music", new MusicServicesControllers().handleDelete);
 routes.post("/api/music/:id_user", new MusicServicesControllers().handleSave);
 routes.get("/api/music/:id_group", new MusicServicesControllers().handleExecuteMusicGroup);
+routes.get("/api/music", new MusicServicesControllers().handleExecuteAll);
+routes.get("/api/music/user/:id_user", new MusicServicesControllers().handleExecuteMusicGroup);
 
 // Video
 routes.delete("/api/video/:id_video", new VideoServicesControllers().handleDelete);
 routes.post("/api/video/:id_user", new VideoServicesControllers().handleSave);
 routes.put("/api/video/:id_video", new VideoServicesControllers().handleEdit);
 routes.get("/api/video/:id_group", new VideoServicesControllers().handleExecuteVideoGroup);
+routes.get("/api/video/", new VideoServicesControllers().handleExecuteAll);
+routes.get("/api/video/user/:id_user", new VideoServicesControllers().handleExecuteByUser);
 
 // Stream
 routes.get("/api/stream", new StreamControllers().indexVideo);

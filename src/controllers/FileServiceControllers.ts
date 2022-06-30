@@ -24,9 +24,4 @@ export default class FileServiceControllers {
 
 
     }
-
-    async download(request: Request, response: Response){
-
-
-    }
 }

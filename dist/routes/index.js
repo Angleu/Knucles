@@ -45,11 +45,15 @@ routes.get("/api/album", new AlbumServicesControllers_1.default().handleExecute)
 routes.delete("/api/music/:id_music", new MusicServicesControllers_1.default().handleDelete);
 routes.post("/api/music/:id_user", new MusicServicesControllers_1.default().handleSave);
 routes.get("/api/music/:id_group", new MusicServicesControllers_1.default().handleExecuteMusicGroup);
+routes.get("/api/music", new MusicServicesControllers_1.default().handleExecuteAll);
+routes.get("/api/music/user/:id_user", new MusicServicesControllers_1.default().handleExecuteMusicGroup);
 // Video
 routes.delete("/api/video/:id_video", new VideoServicesControllers_1.default().handleDelete);
 routes.post("/api/video/:id_user", new VideoServicesControllers_1.default().handleSave);
 routes.put("/api/video/:id_video", new VideoServicesControllers_1.default().handleEdit);
 routes.get("/api/video/:id_group", new VideoServicesControllers_1.default().handleExecuteVideoGroup);
+routes.get("/api/video/", new VideoServicesControllers_1.default().handleExecuteAll);
+routes.get("/api/video/user/:id_user", new VideoServicesControllers_1.default().handleExecuteByUser);
 // Stream
 routes.get("/api/stream", new StreamControllers_1.default().indexVideo);
 exports.default = routes;

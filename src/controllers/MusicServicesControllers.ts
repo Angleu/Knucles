@@ -4,6 +4,31 @@ import MusicServices from "../services/MusicServices";
 
 
 export default class MusicServicesControllers {
+
+    async handleExecuteAll(request: Request, response: Response) {
+        const { id_user } = request.params
+        const service = new MusicServices();
+
+        const result = await service.executeAll()
+
+        if (result instanceof Error)
+            return response.status(302).json(result.message)
+
+        return response.json(result)
+    }
+
+    async handleExecuteByUser(request: Request, response: Response) {
+        const { id_user } = request.params
+        const service = new MusicServices();
+
+        const result = await service.executeByUser(id_user)
+
+        if (result instanceof Error)
+            return response.status(302).json(result.message)
+
+        return response.json(result)
+    }
+
     async handleExecuteMusicGroup(request: Request, response: Response) {
         const { id_group } = request.params
         const service = new MusicServices();
