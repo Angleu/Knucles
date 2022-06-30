@@ -8,12 +8,17 @@ export default class GroupServices {
             const prisma = new PrismaClient();
             const users = prisma.user.findMany({
                 where: {
-                    username: id_user
+                    username: id_user,
                 },
                 include: {
+                    Group: {
+                        include: {
+                            admin: true
+                        }
+                    },
                     UserGroup: {
                         select: {
-                            group: true
+                            group: true,
                         }
                     }
                 }

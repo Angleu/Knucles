@@ -17,12 +17,17 @@ class GroupServices {
                 const prisma = new client_1.PrismaClient();
                 const users = prisma.user.findMany({
                     where: {
-                        username: id_user
+                        username: id_user,
                     },
                     include: {
+                        Group: {
+                            include: {
+                                admin: true
+                            }
+                        },
                         UserGroup: {
                             select: {
-                                group: true
+                                group: true,
                             }
                         }
                     }
