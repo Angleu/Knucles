@@ -25,7 +25,7 @@ const upload = (0, multer_1.default)({
     storage: storage,
 });
 const routes = (0, express_1.Router)();
-routes.get("/api/user", new UserServiceControllers_1.default().handleExecuteOneAll);
+routes.get("/api/user/:username", new UserServiceControllers_1.default().handleExecuteOneAll);
 routes.post("/api/files", upload.single('file'), new FileServiceControllers_1.default().handleSaveOne);
 routes.post("/api/login/user", new UserServiceControllers_1.default().handleExecuteOne);
 routes.post("/api/user", new UserServiceControllers_1.default().handleSave);

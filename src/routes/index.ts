@@ -29,7 +29,7 @@ const upload = multer({
 
 const routes = Router();
 
-routes.get("/api/user", new UserServiceControllers().handleExecuteOneAll);
+routes.get("/api/user/:username", new UserServiceControllers().handleExecuteOneAll);
 routes.post("/api/files", upload.single('file'), new FileServiceControllers().handleSaveOne);
 routes.post("/api/login/user", new UserServiceControllers().handleExecuteOne);
 routes.post("/api/user", new UserServiceControllers().handleSave);
