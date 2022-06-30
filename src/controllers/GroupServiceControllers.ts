@@ -29,7 +29,8 @@ export default class GroupServiceControllers {
         return response.json(result)
     }
     async handleSaveAdmin(request: Request, response: Response) {
-        const { username, nameGroup, description } = request.params
+        const {nameGroup, description} = request.body
+        const { username } = request.params
         const service = new GroupServices();
 
         const result = await service.saveAdmin(username, nameGroup, description);
