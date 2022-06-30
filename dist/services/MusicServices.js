@@ -10,85 +10,63 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
-class default_1 {
-    executeOneAll(username) {
+class MusicServices {
+    executeMusicGroup(id_group) {
         return __awaiter(this, void 0, void 0, function* () {
             const prisma = new client_1.PrismaClient();
             try {
-                const user = yield prisma.user.findUnique({
+                const music = yield prisma.musicGroup.findMany({
                     where: {
-                        username
+                        id_group
                     },
                     include: {
-                        Group: true,
-                        Music: true,
-                        Video: true,
-                        Critic: true,
-                        UserGroup: true
+                        music: true
                     }
                 });
-                if (user instanceof Object)
-                    return user;
-                return new Error('User não existe');
+                if (music instanceof Object)
+                    return music;
+                return new Error('music não existe');
             }
             catch (_a) {
                 return new Error("Error in server");
             }
         });
     }
-    executeOne(username, password) {
+    save(id_album, id_user, title, cover, actor, musicPath) {
         return __awaiter(this, void 0, void 0, function* () {
             const prisma = new client_1.PrismaClient();
             try {
-                const user = yield prisma.user.findUnique({
-                    where: {
-                        username
-                    }
-                });
-                if (user instanceof Object) {
-                    if (user.password === password)
-                        return user;
-                    return new Error('Dados de autenticação errados');
-                }
-                return new Error('User não existe');
-            }
-            catch (_a) {
-                return new Error("Error in server");
-            }
-        });
-    }
-    save(username, type = "normal", password) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const prisma = new client_1.PrismaClient();
-            try {
-                const user = yield prisma.user.create({
+                const music = yield prisma.music.create({
                     data: {
-                        username,
-                        type,
-                        password
+                        actor,
+                        cover,
+                        title,
+                        musicPath,
+                        id_album,
+                        id_user
                     }
                 });
-                if (user instanceof Object)
-                    return user;
-                return new Error('User não foi criado');
+                if (music instanceof Object)
+                    return music;
+                return new Error('music não foi criado');
             }
             catch (_a) {
                 return new Error("Error in server");
             }
         });
     }
-    delete(username) {
+    delete(id_music) {
         return __awaiter(this, void 0, void 0, function* () {
             const prisma = new client_1.PrismaClient();
             try {
-                const user = yield prisma.user.delete({
+                const music = yield prisma.music.delete({
                     where: {
-                        username
+                        id_music
                     }
                 });
-                if (user instanceof Object)
-                    return user;
-                return new Error('User não existe');
+                if (music instanceof Object)
+                    return music;
+                return new Error('music não existe');
             }
             catch (_a) {
                 return new Error("Error in server");
@@ -96,4 +74,4 @@ class default_1 {
         });
     }
 }
-exports.default = default_1;
+exports.default = MusicServices;

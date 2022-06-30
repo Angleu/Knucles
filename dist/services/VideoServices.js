@@ -10,84 +10,81 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
-class default_1 {
-    executeOneAll(username) {
+class VideoServices {
+    executeVideoGroup(id_group) {
         return __awaiter(this, void 0, void 0, function* () {
             const prisma = new client_1.PrismaClient();
             try {
-                const user = yield prisma.user.findUnique({
+                const video = yield prisma.videoGroup.findMany({
                     where: {
-                        username
+                        id_group
+                    }
+                });
+                if (video instanceof Object)
+                    return video;
+                return new Error('video não existe');
+            }
+            catch (_a) {
+                return new Error("Error in server");
+            }
+        });
+    }
+    edit(title, description, id_video) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const prisma = new client_1.PrismaClient();
+            try {
+                const video = yield prisma.video.update({
+                    where: {
+                        id_video
                     },
-                    include: {
-                        Group: true,
-                        Music: true,
-                        Video: true,
-                        Critic: true,
-                        UserGroup: true
-                    }
-                });
-                if (user instanceof Object)
-                    return user;
-                return new Error('User não existe');
-            }
-            catch (_a) {
-                return new Error("Error in server");
-            }
-        });
-    }
-    executeOne(username, password) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const prisma = new client_1.PrismaClient();
-            try {
-                const user = yield prisma.user.findUnique({
-                    where: {
-                        username
-                    }
-                });
-                if (user instanceof Object) {
-                    if (user.password === password)
-                        return user;
-                    return new Error('Dados de autenticação errados');
-                }
-                return new Error('User não existe');
-            }
-            catch (_a) {
-                return new Error("Error in server");
-            }
-        });
-    }
-    save(username, type = "normal", password) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const prisma = new client_1.PrismaClient();
-            try {
-                const user = yield prisma.user.create({
                     data: {
-                        username,
-                        type,
-                        password
+                        title,
+                        description
                     }
                 });
-                if (user instanceof Object)
-                    return user;
-                return new Error('User não foi criado');
+                if (video instanceof Object)
+                    return video;
+                return new Error('video não existe');
             }
             catch (_a) {
                 return new Error("Error in server");
             }
         });
     }
-    delete(username) {
+    save(id_user, title, description = "normal", cover, actor, videoPath) {
         return __awaiter(this, void 0, void 0, function* () {
             const prisma = new client_1.PrismaClient();
             try {
-                const user = yield prisma.user.delete({
-                    where: {
-                        username
+                const video = yield prisma.video.create({
+                    data: {
+                        actor,
+                        cover,
+                        description,
+                        title,
+                        videoPath,
+                        id_user
                     }
                 });
-                if (user instanceof Object)
-                    return user;
+                if (video instanceof Object)
+                    return video;
+                return new Error('video não foi criado');
+            }
+            catch (_a) {
+                return new Error("Error in server");
+            }
+        });
+    }
+    delete(id_video) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const prisma = new client_1.PrismaClient();
+            try {
+                const video = yield prisma.video.delete({
+                    where: {
+                        id_video
+                    }
+                });
+                if (video instanceof Object)
+                    return video;
                 return new Error('User não existe');
             }
             catch (_a) {
@@ -96,4 +93,4 @@ class default_1 {
         });
     }
 }
-exports.default = default_1;
+exports.default = VideoServices;

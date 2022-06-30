@@ -12,23 +12,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const UserServices_1 = __importDefault(require("../services/UserServices"));
-class UserServiceControllers {
-    handleExecuteOneAll(request, response) {
+const AlbumServices_1 = __importDefault(require("../services/AlbumServices"));
+class AlbumServicesControllers {
+    handleExecute(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { username, password } = request.body;
-            const service = new UserServices_1.default();
-            const result = yield service.executeOneAll(username);
+            const service = new AlbumServices_1.default();
+            const result = yield service.executeAlbum();
             if (result instanceof Error)
                 return response.status(302).json(result.message);
             return response.json(result);
         });
     }
-    handleExecuteOne(request, response) {
+    handleEdit(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { username, password } = request.body;
-            const service = new UserServices_1.default();
-            const result = yield service.executeOne(username, password);
+            const { name, description } = request.body;
+            const { id_album } = request.params;
+            const service = new AlbumServices_1.default();
+            const result = yield service.edit(name, description, id_album);
             if (result instanceof Error)
                 return response.status(302).json(result.message);
             return response.json(result);
@@ -36,9 +36,9 @@ class UserServiceControllers {
     }
     handleSave(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { username, type, password } = request.body;
-            const service = new UserServices_1.default();
-            const result = yield service.save(username, type, password);
+            const { name, description } = request.body;
+            const service = new AlbumServices_1.default();
+            const result = yield service.save(name, description);
             if (result instanceof Error)
                 return response.status(302).json(result.message);
             return response.json(result);
@@ -46,13 +46,13 @@ class UserServiceControllers {
     }
     handleDelete(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { username } = request.params;
-            const service = new UserServices_1.default();
-            const result = yield service.delete(username);
+            const { id_album } = request.params;
+            const service = new AlbumServices_1.default();
+            const result = yield service.delete(id_album);
             if (result instanceof Error)
                 return response.status(302).json(result.message);
             return response.json(result);
         });
     }
 }
-exports.default = UserServiceControllers;
+exports.default = AlbumServicesControllers;

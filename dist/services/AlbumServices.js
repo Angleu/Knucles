@@ -11,84 +11,78 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
 class default_1 {
-    executeOneAll(username) {
+    executeAlbum() {
         return __awaiter(this, void 0, void 0, function* () {
             const prisma = new client_1.PrismaClient();
             try {
-                const user = yield prisma.user.findUnique({
-                    where: {
-                        username
-                    },
+                const albums = yield prisma.album.findMany({
                     include: {
-                        Group: true,
                         Music: true,
-                        Video: true,
-                        Critic: true,
-                        UserGroup: true
+                        Critic: true
                     }
                 });
-                if (user instanceof Object)
-                    return user;
-                return new Error('User não existe');
+                if (albums instanceof Object)
+                    return albums;
+                return new Error('albums não existe');
             }
             catch (_a) {
                 return new Error("Error in server");
             }
         });
     }
-    executeOne(username, password) {
+    edit(name, description, id_album) {
         return __awaiter(this, void 0, void 0, function* () {
             const prisma = new client_1.PrismaClient();
             try {
-                const user = yield prisma.user.findUnique({
+                const album = yield prisma.album.update({
                     where: {
-                        username
-                    }
-                });
-                if (user instanceof Object) {
-                    if (user.password === password)
-                        return user;
-                    return new Error('Dados de autenticação errados');
-                }
-                return new Error('User não existe');
-            }
-            catch (_a) {
-                return new Error("Error in server");
-            }
-        });
-    }
-    save(username, type = "normal", password) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const prisma = new client_1.PrismaClient();
-            try {
-                const user = yield prisma.user.create({
+                        id_album
+                    },
                     data: {
-                        username,
-                        type,
-                        password
+                        name,
+                        description
                     }
                 });
-                if (user instanceof Object)
-                    return user;
-                return new Error('User não foi criado');
+                if (album instanceof Object)
+                    return album;
+                return new Error('album não existe');
             }
             catch (_a) {
                 return new Error("Error in server");
             }
         });
     }
-    delete(username) {
+    save(name, description) {
         return __awaiter(this, void 0, void 0, function* () {
             const prisma = new client_1.PrismaClient();
             try {
-                const user = yield prisma.user.delete({
-                    where: {
-                        username
+                const album = yield prisma.album.create({
+                    data: {
+                        name,
+                        description
                     }
                 });
-                if (user instanceof Object)
-                    return user;
-                return new Error('User não existe');
+                if (album instanceof Object)
+                    return album;
+                return new Error('album não existe');
+            }
+            catch (_a) {
+                return new Error("Error in server");
+            }
+        });
+    }
+    delete(id_album) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const prisma = new client_1.PrismaClient();
+            try {
+                const album = yield prisma.album.delete({
+                    where: {
+                        id_album
+                    }
+                });
+                if (album instanceof Object)
+                    return album;
+                return new Error('album não existe');
             }
             catch (_a) {
                 return new Error("Error in server");

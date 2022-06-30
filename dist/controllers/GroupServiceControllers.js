@@ -12,47 +12,39 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const UserServices_1 = __importDefault(require("../services/UserServices"));
-class UserServiceControllers {
-    handleExecuteOneAll(request, response) {
+const GroupServices_1 = __importDefault(require("../services/GroupServices"));
+class GroupServiceControllers {
+    handleSaveUserMember(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { username, password } = request.body;
-            const service = new UserServices_1.default();
-            const result = yield service.executeOneAll(username);
+            const { username } = request.body;
+            const { id_group } = request.params;
+            const service = new GroupServices_1.default();
+            const result = yield service.saveUserMember(username, id_group);
             if (result instanceof Error)
                 return response.status(302).json(result.message);
             return response.json(result);
         });
     }
-    handleExecuteOne(request, response) {
+    handleDeleteUserMember(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { username, password } = request.body;
-            const service = new UserServices_1.default();
-            const result = yield service.executeOne(username, password);
+            const { username } = request.body;
+            const { id_group } = request.params;
+            const service = new GroupServices_1.default();
+            const result = yield service.deleteUserMember(id_group, username);
             if (result instanceof Error)
                 return response.status(302).json(result.message);
             return response.json(result);
         });
     }
-    handleSave(request, response) {
+    handleSaveAdmin(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { username, type, password } = request.body;
-            const service = new UserServices_1.default();
-            const result = yield service.save(username, type, password);
-            if (result instanceof Error)
-                return response.status(302).json(result.message);
-            return response.json(result);
-        });
-    }
-    handleDelete(request, response) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const { username } = request.params;
-            const service = new UserServices_1.default();
-            const result = yield service.delete(username);
+            const { username, nameGroup, description } = request.params;
+            const service = new GroupServices_1.default();
+            const result = yield service.saveAdmin(username, nameGroup, description);
             if (result instanceof Error)
                 return response.status(302).json(result.message);
             return response.json(result);
         });
     }
 }
-exports.default = UserServiceControllers;
+exports.default = GroupServiceControllers;

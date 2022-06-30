@@ -11,13 +11,13 @@ datasource db {
 }
 
 model User {
-  username String   @id @unique
-  type     String
-  password String
-  Video    Video[]
-  Music    Music[]
-  Critic   Critic[]
-  Group    Group[]
+  username  String   @id @unique
+  type      String
+  password  String
+  Video     Video[]
+  Music     Music[]
+  Critic    Critic[]
+  Group     Group[]
   create_at DateTime @default(now())
 
 
@@ -26,10 +26,10 @@ model User {
 }
 
 model UserGroup {
-  id_user  String
-  user     User   @relation(fields: [id_user], references: [username])
-  id_group String
-  group    Group  @relation(fields: [id_group], references: [id_group])
+  id_user   String
+  user      User     @relation(fields: [id_user], references: [username])
+  id_group  String
+  group     Group    @relation(fields: [id_group], references: [id_group])
   create_at DateTime @default(now())
 
 
@@ -39,16 +39,31 @@ model UserGroup {
 }
 
 model Group {
-  id_group    String @id @default(uuid())
+  id_group    String   @id @default(uuid())
   nameGroup   String
   description String
   id_user     String
-  admin       User   @relation(fields: [id_user], references: [username])
+  admin       User     @relation(fields: [id_user], references: [username])
+  create_at   DateTime @default(now())
+
+
+  UserGroup  UserGroup[]
+  MusicGroup MusicGroup[]
+  VideoGroup VideoGroup[]
+  @@map("groups")
+}
+
+model MusicGroup {
+  id_music  String
+  music     Music    @relation(fields: [id_music], references: [id_music])
+  id_group  String
+  group     Group    @relation(fields: [id_group], references: [id_group])
   create_at DateTime @default(now())
 
 
-  UserGroup UserGroup[]
-  @@map("groups")
+
+  @@id([id_music, id_group])
+  @@map("musicGroup")
 }
 
 model Music {
@@ -62,9 +77,10 @@ model Music {
   albums    Album    @relation(fields: [id_album], references: [id_album])
   id_user   String
   user      User     @relation(fields: [id_user], references: [username])
-  
 
 
+
+  MusicGroup MusicGroup[]
   @@map("musics")
 }
 
@@ -73,8 +89,8 @@ model Album {
   name        String
   description String
 
-  Music  Music[]
-  Critic Critic[]
+  Music     Music[]
+  Critic    Critic[]
   create_at DateTime @default(now())
 
   @@map("albums")
@@ -94,18 +110,32 @@ model Video {
   create_at DateTime @default(now())
 
   @@map("videos")
+  VideoGroup VideoGroup[]
+}
+
+model VideoGroup {
+  id_video  String
+  video     Video    @relation(fields: [id_video], references: [id_video])
+  id_group  String
+  group     Group    @relation(fields: [id_group], references: [id_group])
+  create_at DateTime @default(now())
+
+
+
+  @@id([id_video, id_group])
+  @@map("videoGroup")
 }
 
 model Critic {
-  id_critic String  @id @default(uuid())
+  id_critic String   @id @default(uuid())
   comment   String
   note      Decimal
   id_user   String
-  user      User    @relation(fields: [id_user], references: [username])
+  user      User     @relation(fields: [id_user], references: [username])
   id_video  String
-  video     Video   @relation(fields: [id_video], references: [id_video])
+  video     Video    @relation(fields: [id_video], references: [id_video])
   id_album  String
-  album     Album   @relation(fields: [id_album], references: [id_album])
+  album     Album    @relation(fields: [id_album], references: [id_album])
   create_at DateTime @default(now())
 
   @@map("critics")

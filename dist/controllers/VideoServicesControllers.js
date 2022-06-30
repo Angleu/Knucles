@@ -12,23 +12,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const UserServices_1 = __importDefault(require("../services/UserServices"));
-class UserServiceControllers {
-    handleExecuteOneAll(request, response) {
+const VideoServices_1 = __importDefault(require("../services/VideoServices"));
+class VideoServicesControllers {
+    handleExecuteVideoGroup(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { username, password } = request.body;
-            const service = new UserServices_1.default();
-            const result = yield service.executeOneAll(username);
+            const { id_group } = request.params;
+            const service = new VideoServices_1.default();
+            const result = yield service.executeVideoGroup(id_group);
             if (result instanceof Error)
                 return response.status(302).json(result.message);
             return response.json(result);
         });
     }
-    handleExecuteOne(request, response) {
+    handleEdit(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { username, password } = request.body;
-            const service = new UserServices_1.default();
-            const result = yield service.executeOne(username, password);
+            const { title, description } = request.body;
+            const { id_video } = request.params;
+            const service = new VideoServices_1.default();
+            const result = yield service.edit(title, description, id_video);
             if (result instanceof Error)
                 return response.status(302).json(result.message);
             return response.json(result);
@@ -36,9 +37,10 @@ class UserServiceControllers {
     }
     handleSave(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { username, type, password } = request.body;
-            const service = new UserServices_1.default();
-            const result = yield service.save(username, type, password);
+            const { title, description, cover, actor, videoPath } = request.body;
+            const { id_user } = request.params;
+            const service = new VideoServices_1.default();
+            const result = yield service.save(id_user, title, description, cover, actor, videoPath);
             if (result instanceof Error)
                 return response.status(302).json(result.message);
             return response.json(result);
@@ -46,13 +48,13 @@ class UserServiceControllers {
     }
     handleDelete(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { username } = request.params;
-            const service = new UserServices_1.default();
-            const result = yield service.delete(username);
+            const { id_video } = request.params;
+            const service = new VideoServices_1.default();
+            const result = yield service.delete(id_video);
             if (result instanceof Error)
                 return response.status(302).json(result.message);
             return response.json(result);
         });
     }
 }
-exports.default = UserServiceControllers;
+exports.default = VideoServicesControllers;

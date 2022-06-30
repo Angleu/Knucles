@@ -1,5 +1,31 @@
 import { PrismaClient } from "@prisma/client"
 export default class {
+
+    async executeOneAll(username: string) {
+        const prisma = new PrismaClient();
+
+        try {
+            const user = await prisma.user.findUnique({
+                where: {
+                    username
+                },
+                include: {
+                    Group: true,
+                    Music: true,
+                    Video: true,
+                    Critic: true,
+                    UserGroup: true
+                }
+            })
+
+            if (user instanceof Object)
+                return user
+
+            return new Error('User não existe')
+        } catch {
+            return new Error("Error in server")
+        }
+    }
     async executeOne(username: string, password: string) {
         const prisma = new PrismaClient();
 

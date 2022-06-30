@@ -2,6 +2,18 @@ import { Request, Response } from "express";
 import UserServices from "../services/UserServices";
 
 export default class UserServiceControllers {
+    async handleExecuteOneAll(request: Request, response: Response) {
+        const { username, password } = request.body
+        const service = new UserServices();
+
+        const result = await service.executeOneAll(username);
+
+        if (result instanceof Error)
+            return response.status(302).json(result.message)
+
+        return response.json(result)
+    }
+
     async handleExecuteOne(request: Request, response: Response) {
         const { username, password } = request.body
         const service = new UserServices();
